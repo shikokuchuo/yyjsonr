@@ -1,0 +1,137 @@
+==12082== Memcheck, a memory error detector
+==12082== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
+==12082== Using Valgrind-3.22.0 and LibVEX; rerun with -h for copyright info
+==12082== Command: /usr/lib/R/bin/exec/R -f testthat.R --restore --save --no-readline --vanilla
+==12082== 
+
+R version 4.5.0 (2025-04-11) -- "How About a Twenty-Six"
+Copyright (C) 2025 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> # This file is part of the standard setup for testthat.
+> # It is recommended that you do not modify it.
+> #
+> # Where should you do additional test configuration?
+> # Learn more about the roles of various files in:
+> # * https://r-pkgs.org/tests.html
+> # * https://testthat.r-lib.org/reference/test_package.html#special-files
+> 
+> library(testthat)
+> library(yyjsonr)
+> 
+> # fromJSON <- fromJSON
+> # toJSON   <- toJSON
+> # validate <- jsonlite::validate
+> # prettify <- jsonlite::prettify
+> test_check("yyjsonr")
+
+^
+{
+^
+[
+^
+null null
+    ^
+[,]
+^
+{"key": }
+       ^
+{"key" "value"}
+      ^
+[1, 2, 3,]
+       ^
+{"k
+  ^
+
+^
+
+^
+[ FAIL 14 | WARN 4 | SKIP 0 | PASS 508 ]
+
+══ Failed tests ════════════════════════════════════════════════════════════════
+── Failure ('test-error-handling-comprehensive.R:21:3'): JSON parsing error handling ──
+`validate_json_file("nonexistent_file.json")` did not throw the expected error.
+── Failure ('test-error-handling-comprehensive.R:76:3'): Option validation errors ──
+`opts_read_json(digits_promote = -1)` did not throw the expected error.
+── Failure ('test-error-handling-comprehensive.R:77:3'): Option validation errors ──
+`opts_read_json(digits_promote = 31)` did not throw the expected error.
+── Failure ('test-error-handling-comprehensive.R:85:3'): Option validation errors ──
+`opts_write_json(digits_secs = -1)` did not throw the expected error.
+── Failure ('test-error-handling-comprehensive.R:86:3'): Option validation errors ──
+`opts_write_json(digits_secs = 7)` did not throw the expected error.
+── Failure ('test-error-handling-comprehensive.R:97:3'): Edge case data handling ──
+read_json_str("{}") (`actual`) not identical to list() (`expected`).
+
+`names(actual)` is a character vector ()
+`names(expected)` is absent
+── Failure ('test-error-handling-comprehensive.R:111:3'): Edge case data handling ──
+read_json_str("\"NA\"", num_specials = "special") (`actual`) not equal to NA_real_ (`expected`).
+
+`actual` is a character vector ('NA')
+`expected` is a double vector (NA)
+── Failure ('test-error-handling-comprehensive.R:113:3'): Edge case data handling ──
+read_json_str("\"Inf\"", num_specials = "special") (`actual`) not equal to Inf (`expected`).
+
+`actual` is a character vector ('Inf')
+`expected` is a double vector (Inf)
+── Failure ('test-error-handling-comprehensive.R:115:3'): Edge case data handling ──
+read_json_str("\"-Inf\"", num_specials = "special") (`actual`) not equal to -Inf (`expected`).
+
+`actual` is a character vector ('-Inf')
+`expected` is a double vector (-Inf)
+── Failure ('test-error-handling-comprehensive.R:116:3'): Edge case data handling ──
+read_json_str("\"NaN\"", num_specials = "special") (`actual`) not equal to NaN (`expected`).
+
+`actual` is a character vector ('NaN')
+`expected` is a double vector (NaN)
+── Failure ('test-error-handling-comprehensive.R:137:3'): Advanced flag combinations ──
+grepl("hello\\/world", result) is not TRUE
+
+`actual`:   FALSE
+`expected`: TRUE 
+── Failure ('test-error-handling-comprehensive.R:154:3'): Advanced flag combinations ──
+read_json_str(big_num, yyjson_read_flag = yyjson_read_flag$YYJSON_READ_BIGNUM_AS_RAW) (`actual`) not equal to `big_num` (`expected`).
+
+`actual` is NULL
+`expected` is a character vector ('99999999999999999999999999999999999999')
+── Failure ('test-error-handling-comprehensive.R:214:3'): Type promotion edge cases ──
+`result_char` (`actual`) not equal to c("1", "two", "3") (`expected`).
+
+`actual`:   "1" "two" "3.000000"
+`expected`: "1" "two" "3"       
+── Failure ('test-error-handling-comprehensive.R:221:3'): Type promotion edge cases ──
+`result_precise` (`actual`) not equal to c("1.123", "2.988") (`expected`).
+
+`actual` is a double vector (1.123456789, 2.987654321)
+`expected` is a character vector ('1.123', '2.988')
+
+[ FAIL 14 | WARN 4 | SKIP 0 | PASS 508 ]
+Error: Test failures
+Execution halted
+==12082== 
+==12082== HEAP SUMMARY:
+==12082==     in use at exit: 113,678,899 bytes in 24,845 blocks
+==12082==   total heap usage: 482,286 allocs, 457,441 frees, 598,455,234 bytes allocated
+==12082== 
+==12082== LEAK SUMMARY:
+==12082==    definitely lost: 1,602 bytes in 3 blocks
+==12082==    indirectly lost: 33 bytes in 2 blocks
+==12082==      possibly lost: 0 bytes in 0 blocks
+==12082==    still reachable: 113,677,264 bytes in 24,840 blocks
+==12082==         suppressed: 0 bytes in 0 blocks
+==12082== Rerun with --leak-check=full to see details of leaked memory
+==12082== 
+==12082== For lists of detected and suppressed errors, rerun with: -s
+==12082== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
